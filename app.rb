@@ -18,7 +18,7 @@ class Armoire < Sinatra::Base
       $redis
     end
 
-    def set_redis(redis)
+    def redis=(redis)
       $redis = redis
     end
 
@@ -35,9 +35,9 @@ class Armoire < Sinatra::Base
   post '/api/connect' do
     begin
       if params[:sock]
-        set_redis Redis.new(path: params[:sock])
+        redis = Redis.new(path: params[:sock])
       else
-        set_redis Redis.new(host: params[:host] || 'localhost',
+        redis = Redis.new(host: params[:host] || 'localhost',
                             port: params[:port] || '6379')
       end
 
