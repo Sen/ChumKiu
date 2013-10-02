@@ -15,7 +15,7 @@ class Armoire < Sinatra::Base
 
   helpers do
     def redis
-      $redis
+      $redis ||= Redis.new(host: 'localhost', port: '6379')
     end
 
     def redis=(redis)
@@ -38,7 +38,7 @@ class Armoire < Sinatra::Base
         redis = Redis.new(path: params[:sock])
       else
         redis = Redis.new(host: params[:host] || 'localhost',
-                            port: params[:port] || '6379')
+                          port: params[:port] || '6379')
       end
 
       json redis.info
