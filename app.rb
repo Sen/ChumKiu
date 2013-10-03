@@ -48,10 +48,10 @@ class Armoire < Sinatra::Base
     end
   end
 
-  get '/api/redis' do
+  get '/api/info/?:type?' do
     begin
       protected!
-      json redis.info
+      json redis.info(params[:type])
     rescue Exception => e
       status 401
       json error: e
